@@ -1,0 +1,80 @@
+Week4Assignment CodeBook
+
+Variables:
+Subject: number assigned to a particular participant
+Activity_Type: number assigned in the data and description of the action taken by participant.
+
+All variables beginning with 't' are time domain (units in seconds) , all beginning with 'f' are frequency domain (units in hertz).
+Original variable names were preserved as they were sufficiently descriptive of the measurement.
+
+tBodyAcc-mean()-XYZ: mean time body accelerates in all 3 dimensions.
+tGravityAcc-mean()-XYZ: mean time gravity accelerates in all 3 dimensions.
+tBodyAccJerk-mean()-XYZ: mean time body accelerates in a short period in all 3 dimensions.
+tBodyGyro-mean()-XYZ: mean time body is turning in all 3 dimensions.
+tBodyGyroJerk-mean()-XYZ: mean time body is turning in a short period in all 3 dimensions.
+tBodyAccMag-mean(): mean magnitude of time the body is accelerating.
+tGravityAccMag-mean(): mean magnitude of time gravity is accelerating.
+tBodyAccJerkMag-mean(): mean magnitude of time body is accelerating in short period.
+tBodyGyroMag-mean(): mean magnitude of time body is turning.
+tBodyGyroJerkMag-mean(): mean magnitude of time body is turning in short period.
+
+fBodyAcc-mean()-XYZ: mean frequency body accelerates in all 3 dimensions.
+fBodyAccJerk-mean()-XYZ: mean frequency body accelerates in a short period in all 3 dimensions.
+fBodyGyro-mean()-XYZ: mean frequency body is turning in all 3 dimensions.
+fBodyAccMag-mean(): mean magnitude of frequency the body is accelerating.
+fBodyBodyAccJerkMag-mean(): mean magnitude of frequency body is accelerating in short period.
+fBodyBodyGyroMag-mean(): mean magnitude of frequency body is turning.
+fBodyBodyGyroJerkMag-mean(): mean magnitude of frequency body is turning in short period.
+
+tBodyAcc-std()-XYZ: standard deviation of time body accelerates in all 3 dimensions.
+tGravityAcc-std()-XYZ: standard deviation of time gravity accelerates in all 3 dimensions.
+tBodyAccJerk-std()-XYZ: standard deviation of time body accelerates in a short period in all 3 dimensions.
+tBodyGyro-std()-XYZ: standard deviation of time body is turning in all 3 dimensions.
+tBodyGyroJerk-std()-XYZ: standard deviation of time body is turning in a short period in all 3 dimensions.
+tBodyAccMag-std(): standard deviation of magnitude of time the body is accelerating.
+tGravityAccMag-std(): standard deviation of magnitude of time gravity is accelerating.
+tBodyAccJerkMag-std(): standard deviation of magnitude of time body is accelerating in short period.
+tBodyGyroMag-std(): standard deviation of magnitude of time body is turning.
+tBodyGyroJerkMag-std(): standard deviation of magnitude of time body is turning in short period.
+
+fBodyAcc-std()-XYZ: standard deviation of frequency body accelerates in all 3 dimensions.
+fBodyAccJerk-std()-XYZ: standard deviation of frequency body accelerates in a short period in all 3 dimensions.
+fBodyGyro-std()-XYZ: standard deviation of frequency body is turning in all 3 dimensions.
+fBodyAccMag-std(): standard deviation of magnitude of frequency the body is accelerating.
+fBodyBodyAccJerkMag-std(): standard deviation of magnitude of frequency body is accelerating in short period.
+fBodyBodyGyroMag-std(): standard deviation of magnitude of frequency body is turning.
+fBodyBodyGyroJerkMag-std(): standard deviation of magnitude of frequency body is turning in short period.
+
+Data:
+
+The data was acquired through the use of a Samsung Galaxy S phone and the users were asked to perform 6 tasks with the phone on their person.
+These tasks were Walking, Walking Upstairs, Walking Downstairs, Sitting, Standing, and Laying.
+The Accelerometer and Gyroscope in the phone recorded the data, which was then run through filters to eliminate noise.
+
+Transformations:
+
+First the feature_info.txt data was fed in and given unique numbers to allow them to be turned into a dictionary for dplyr later, then the subject, X, and y data from 'train' was added.
+Columns were bound in order of subject, y data, x data.  Process was repeated for 'test' data.
+The completed data set was then row bound: training data first, test data second.
+##THIS COMPLETES OBJECTIVE 1.
+
+The dataframe is then given new variable names: subject_test becomes Subject, y data becomes Activity_Type, and x data becomes the feature_info names fed in above.
+Next, data is selected from the total data set: Subject, Activity_Type, and all variables containing mean(), std(), but not "Freq".  Freq is excluded because it relates to a weighted average variable which is outside the scope of this objective.
+##THIS COMPLETES OBJECTIVE 2
+
+Moving to Activity_Types, the variable is mutated 6 times with each pass looking for the number 1-6 and replacing it with the appropriate descriptive action.
+These replacements are:
+1 = 1 Walking
+2 = 2 Walking_Upstairs
+3 = 3 Walking_Downstairs
+4 = 4 Sitting
+5 = 5 Standing
+6 = 6 Laying
+##THIS COMPLETES OBJECTIVE 3
+
+Next comes a little tidying.  The variable names are scrubbed of their prefix numbers since all remaining variables are unique, descriptive names.
+##THIS COMPLETES OBJECTIVE 4
+
+At the end the data is grouped by both Subject and Activity_Type and is summarised to find the mean of all variables.
+The result is written to a text file called "Accelerometer_Tidy_Data.txt".
+##THIS COMPLETES OBJECTIVE 5
